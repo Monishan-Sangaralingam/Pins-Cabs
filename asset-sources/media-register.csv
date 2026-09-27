@@ -1,0 +1,10 @@
+filename,creator,source,license,acquisition_date,credit_requirement,illustrative,approved_usage
+hero-source.png,OpenAI image generation,built-in image generation,project-use generated asset,2026-09-27,None,yes,website hero and social crop
+sedan-source.png,OpenAI image generation,built-in image generation,project-use generated asset,2026-09-27,None,yes,illustrative vehicle class
+suv-source.png,OpenAI image generation,built-in image generation,project-use generated asset,2026-09-27,None,yes,illustrative vehicle class
+van-source.png,OpenAI image generation,built-in image generation,project-use generated asset,2026-09-27,None,yes,illustrative vehicle class
+kdh-9-source.png,OpenAI image generation,built-in image generation,project-use generated asset,2026-09-27,None,yes,illustrative 9-seat KDH-style vehicle class
+kdh-14-source.png,OpenAI image generation,built-in image generation,project-use generated asset,2026-09-27,None,yes,illustrative 14-seat KDH-style vehicle class
+ac-bus-source.png,OpenAI image generation,built-in image generation,project-use generated asset,2026-09-27,None,yes,illustrative AC coach vehicle class
+non-ac-bus-source.png,OpenAI image generation,built-in image generation,project-use generated asset,2026-09-27,None,yes,illustrative non-AC bus vehicle class
+wedding-luxury-source.png,OpenAI image generation,built-in image generation,project-use generated asset,2026-09-27,None,yes,illustrative wedding and luxury car service

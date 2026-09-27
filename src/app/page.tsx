@@ -1,69 +1,27 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowDown, ArrowRight, Check, Clock3, Headphones, MapPin, Phone, Sparkles } from "lucide-react";
+import { PageShell } from "@/components/shared/PageShell";
+import { QuickPlanner } from "@/components/home/QuickPlanner";
+import { VehicleCards } from "@/components/vehicles/VehicleCards";
+import { business } from "@/config/business";
+import { faqs, services } from "@/data/content";
 
 export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+  return <PageShell>
+    <section className="hero">
+      <picture><source media="(max-width: 720px)" srcSet="/media/hero/hero-mobile.webp"/><Image className="hero-image" src="/media/hero/hero-desktop.webp" alt="" fill priority sizes="100vw"/></picture><div className="hero-shade"/>
+      <div className="hero-route" aria-hidden="true"><span/><i/><b/></div>
+      <div className="hero-content shell"><div className="hero-copy"><span className="hero-eyebrow"><Sparkles size={15}/>PINS CABS · YOUR JOURNEY STARTS HERE</span><h1>Your next<br/>journey. <em>Made simple.</em></h1><p>Plan your trip, choose your ride, and contact PINS Cabs to arrange the details.</p><div className="hero-actions"><Link className="button button--lime" href="/plan-ride">Plan my ride <ArrowRight size={18}/></Link><Link className="button button--ghost" href="/vehicles">Explore vehicles <ArrowDown size={18}/></Link></div><div className="hero-facts"><span><Clock3/>Available 24/7</span><span><MapPin/>Based in Wattala</span><span><Phone/>{business.phoneDisplay}</span></div></div></div>
+      <span className="illustration-note">Illustrative vehicle image</span>
+    </section>
+    <div className="planner-wrap shell"><QuickPlanner/></div>
+    <section className="section shell services-section"><div className="section-heading"><div><span className="eyebrow">Choose your journey</span><h2>One place to plan<br/>every kind of ride.</h2></div><p>From everyday cabs and wedding cars to staff transport and long-trip buses, start with what you know and we’ll confirm the rest.</p></div><div className="service-grid">{services.map((service, index) => { const Icon = service.icon; return <Link href={`/plan-ride?service=${service.id}`} className="service-card" key={service.id}><div className="service-media"><Image src={service.image} alt={service.imageAlt} width={1200} height={900}/><span className="service-number">0{index + 1}</span><div className="service-icon"><Icon/></div></div><span className="eyebrow">{service.kicker}</span><h3>{service.name}</h3><p>{service.description}</p><b>Plan this trip <ArrowRight size={16}/></b></Link>; })}</div></section>
+    <section className="dark-section"><div className="section shell"><div className="section-heading light"><div><span className="eyebrow">Cars · KDH vans · buses</span><h2>A comfortable fit<br/>for every group.</h2></div><div><p>Compare sedan, SUV, 9- and 14-seat KDH vans, AC coaches, non-AC buses and wedding car options. Exact vehicle and luggage fit are confirmed by PINS Cabs.</p><Link href="/vehicles">View all vehicles <ArrowRight size={16}/></Link></div></div><VehicleCards/></div></section>
+    <section className="section shell how-section" id="how-it-works"><div className="how-intro"><span className="eyebrow">How it works</span><h2>From idea to itinerary<br/>in three clear steps.</h2><p>No account, no payment and no automatic booking. You stay in control of the message.</p></div><div className="steps-list"><article><span>01</span><div><h3>Tell us your trip</h3><p>Add pickup, destination, timing and the people travelling.</p></div></article><article><span>02</span><div><h3>Choose your ride</h3><p>Select an illustrative class or ask us to recommend a suitable option.</p></div></article><article><span>03</span><div><h3>Confirm with us</h3><p>Open WhatsApp, send the prepared enquiry, and wait for availability and price confirmation.</p></div></article></div></section>
+    <section className="contact-strip"><div className="shell"><div><span className="eyebrow">At your service</span><h2>Wattala-based.<br/>Ready around the clock.</h2></div><div className="contact-details"><a href={`tel:${business.phoneHref}`}><Phone/><span><small>Call PINS Cabs</small>{business.phoneDisplay}</span></a><a href={business.mapUrl} target="_blank" rel="noreferrer"><MapPin/><span><small>Find our base</small>{business.address}</span></a><div><Headphones/><span><small>Operating hours</small>{business.hours}</span></div></div></div></section>
+    <section className="section shell checklist-section"><div><span className="eyebrow">Before you send</span><h2>A better enquiry gets you<br/>a clearer answer.</h2></div><div className="checklist">{["Exact pickup and destination","Date and local pickup time","Passenger and luggage count","Flight details, when relevant","Any access or pickup instructions","A preferred vehicle class"].map((item) => <span key={item}><Check size={18}/>{item}</span>)}</div></section>
+    <section className="section shell faq-section"><div><span className="eyebrow">Good to know</span><h2>Frequently asked<br/>questions.</h2></div><div className="faq-list">{faqs.map(([q,a], index) => <details key={q} open={index === 0}><summary><span>{q}</span><i>+</i></summary><p>{a}</p></details>)}</div></section>
+    <section className="closing"><div className="shell"><span className="eyebrow">Your next ride starts here</span><h2>Where would you<br/>like to go?</h2><Link className="button button--lime" href="/plan-ride">Plan your ride <ArrowRight/></Link></div></section>
+  </PageShell>;
 }
