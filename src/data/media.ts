@@ -9,7 +9,7 @@ export type MediaAsset = {
 };
 
 export const media = {
-  hero: { id: "hero", src: "/media/hero/hero-desktop.webp", mobileSrc: "/media/hero/hero-mobile.webp", alt: "", width: 1920, height: 1080, illustrative: true },
+  hero: { id: "hero-v2", src: "/media/hero/hero-desktop-v2.webp", mobileSrc: "/media/hero/hero-mobile-v2.webp", alt: "", width: 1920, height: 1080, illustrative: true },
   sedan: { id: "sedan", src: "/media/fleet/sedan.webp", alt: "Illustrative white sedan viewed from the front and side", width: 1200, height: 900, illustrative: true },
   suv: { id: "suv", src: "/media/fleet/suv.webp", alt: "Illustrative white SUV viewed from the front and side", width: 1200, height: 900, illustrative: true },
   van: { id: "van", src: "/media/fleet/van.webp", alt: "Illustrative white passenger van viewed from the front and side", width: 1200, height: 900, illustrative: true },

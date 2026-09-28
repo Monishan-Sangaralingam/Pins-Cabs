@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { navItems } from "@/config/business";
 import { Logo } from "./Logo";
 
 export function SiteHeader() {
+  const pathname = usePathname();
+  const normalizedPath = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -36,19 +39,51 @@ export function SiteHeader() {
     document.addEventListener("keydown", onKeyDown);
     return () => { document.body.style.overflow = previousOverflow; document.removeEventListener("keydown", onKeyDown); };
   }, [open]);
+  const headerClasses = ["site-header", scrolled && "is-scrolled", open && "menu-open"]
+    .filter(Boolean)
+    .join(" ");
+  const pageLabels: Record<string, string> = {
+    "/": "Home",
+    "/services": "Services",
+    "/vehicles": "Vehicles",
+    "/plan-ride": "Plan a ride",
+    "/contact": "Contact",
+    "/privacy": "Privacy",
+  };
+  const currentPage = pageLabels[normalizedPath] ?? "PINS Cabs";
+
+  function handleHeaderNavigation(event: MouseEvent<HTMLAnchorElement>, href: string) {
+    setOpen(false);
+    if (href.includes("#")) return;
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    const resetScroll = () => window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    resetScroll();
+    window.requestAnimationFrame(() => window.requestAnimationFrame(resetScroll));
+  }
+
   return (
-    <header className={`site-header ${scrolled ? "is-scrolled" : ""} ${open ? "menu-open" : ""}`}>
+    <header className={headerClasses}>
       <div className="header-inner">
-        <Logo light={!scrolled && !open} />
+        <Logo light />
+        <span className="header-page-label" aria-label={`Current page: ${currentPage}`}><small>Current page</small>{currentPage}</span>
         <nav className="desktop-nav" aria-label="Primary navigation">
-          {navItems.map((item) => <Link key={item.href} href={item.href}>{item.label}</Link>)}
+          {navItems.map((item) => {
+            const route = item.href.split("#")[0];
+            const active = route !== "/" && normalizedPath === route;
+            return <Link key={item.href} href={item.href} scroll={item.href.includes("#")} className={active ? "is-active" : undefined} aria-current={active ? "page" : undefined} onClick={(event) => handleHeaderNavigation(event, item.href)}>{item.label}</Link>;
+          })}
         </nav>
-        <Link className="button button--lime header-cta" href="/plan-ride">Plan my ride <span>↗</span></Link>
+        <Link className={`button button--lime header-cta ${normalizedPath === "/plan-ride" ? "is-active" : ""}`} aria-current={normalizedPath === "/plan-ride" ? "page" : undefined} href="/plan-ride" scroll={false} onClick={(event) => handleHeaderNavigation(event, "/plan-ride")}>Plan my ride <span>↗</span></Link>
         <button ref={menuButtonRef} className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? "Close menu" : "Open menu"}>{open ? <X /> : <Menu />}</button>
       </div>
       {open && <nav ref={mobileMenuRef} id="mobile-menu" className="mobile-menu" aria-label="Mobile navigation">
-        {navItems.map((item) => <Link key={item.href} href={item.href} onClick={() => setOpen(false)}>{item.label}<span>↗</span></Link>)}
-        <Link className="button button--lime" href="/plan-ride" onClick={() => setOpen(false)}>Plan my ride</Link>
+        {navItems.map((item) => {
+          const route = item.href.split("#")[0];
+          const active = route !== "/" && normalizedPath === route;
+          return <Link key={item.href} href={item.href} scroll={item.href.includes("#")} className={active ? "is-active" : undefined} aria-current={active ? "page" : undefined} onClick={(event) => handleHeaderNavigation(event, item.href)}>{item.label}<span>↗</span></Link>;
+        })}
+        <Link className="button button--lime" href="/plan-ride" scroll={false} onClick={(event) => handleHeaderNavigation(event, "/plan-ride")}>Plan my ride</Link>
       </nav>}
     </header>
   );

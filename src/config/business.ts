@@ -1,9 +1,9 @@
 export const business = {
   name: "PINS Cabs",
   legalName: "PINS Cabs",
-  phoneDisplay: "077 788 0288",
-  phoneHref: "+94777880288",
-  whatsappNumber: "94777880288",
+  phoneDisplay: "072 800 0400",
+  phoneHref: "+94728000400",
+  whatsappNumber: "+94728000400",
   address: "No. 133, Negombo–Colombo Main Road, Wattala 11300",
   mapUrl: "https://www.google.com/maps/search/?api=1&query=No.+133+Negombo+Colombo+Main+Road+Wattala+11300",
   hours: "Available 24/7",
