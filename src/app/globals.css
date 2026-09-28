@@ -780,3 +780,41 @@ main,.site-footer{position:relative;z-index:2}
 @media(max-width:360px){
   .header-page-label{display:none}
 }
+
+/* Fleet expansion and mobile ride-type discovery */
+@media(min-width:1150px){
+  .service-card:nth-child(n+5){grid-column:span 3}
+}
+
+.contact-card h2{overflow-wrap:anywhere}
+
+@media(max-width:760px){
+  .hero--sunset .hero-actions .button--ghost{
+    border-color:#ffffff9c;
+    background:#071113e8;
+    color:#fff;
+    box-shadow:0 12px 32px #0009,0 0 0 1px #ffffff12 inset;
+    backdrop-filter:blur(14px);
+  }
+  .hero--sunset .hero-actions .button--ghost:hover{
+    border-color:var(--lime);
+    background:#0d1d1fe8;
+  }
+  .quick-tabs{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:7px;
+    overflow:visible;
+    padding:2px 0 11px;
+    scroll-snap-type:none;
+  }
+  .quick-tabs button{
+    width:100%;
+    min-width:0;
+    min-height:48px;
+    padding:7px 8px;
+    white-space:normal;
+    line-height:1.2;
+    text-align:center;
+  }
+}

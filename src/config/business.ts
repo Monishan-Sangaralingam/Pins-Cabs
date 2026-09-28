@@ -4,6 +4,8 @@ export const business = {
   phoneDisplay: "072 800 0400",
   phoneHref: "+94728000400",
   whatsappNumber: "+94728000400",
+  emailDisplay: "pinselectronics@gmail.com",
+  emailHref: "mailto:pinselectronics@gmail.com",
   address: "No. 133, Negombo–Colombo Main Road, Wattala 11300",
   mapUrl: "https://www.google.com/maps/search/?api=1&query=No.+133+Negombo+Colombo+Main+Road+Wattala+11300",
   hours: "Available 24/7",

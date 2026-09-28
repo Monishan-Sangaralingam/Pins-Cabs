@@ -18,4 +18,6 @@ export const media = {
   acBus: { id: "ac-bus", src: "/media/fleet/ac-bus.webp", alt: "Illustrative white air-conditioned private coach bus", width: 1200, height: 900, illustrative: true },
   nonAcBus: { id: "non-ac-bus", src: "/media/fleet/non-ac-bus.webp", alt: "Illustrative white non-air-conditioned private bus", width: 1200, height: 900, illustrative: true },
   weddingLuxury: { id: "wedding-luxury", src: "/media/fleet/wedding-luxury.webp", alt: "Illustrative white luxury wedding sedan with restrained floral decoration", width: 1200, height: 900, illustrative: true },
+  suzukiEvery: { id: "suzuki-every", src: "/media/fleet/suzuki-every.webp", alt: "Illustrative white Suzuki Every-style compact van", width: 1200, height: 900, illustrative: true },
+  lorry: { id: "lorry", src: "/media/fleet/lorry.webp", alt: "Illustrative white enclosed light-duty lorry", width: 1200, height: 900, illustrative: true },
 } satisfies Record<string, MediaAsset>;

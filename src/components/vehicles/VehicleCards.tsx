@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight, BriefcaseBusiness, Check, Users } from "lucide-react";
+import { ArrowUpRight, Check, Users } from "lucide-react";
 import { vehicles } from "@/data/content";
 import { usePlanner } from "@/components/planner/PlannerProvider";
 
@@ -14,7 +14,7 @@ export function VehicleCards({ limit }: { limit?: number }) {
     return <article className={`vehicle-card ${selected ? "is-selected" : ""}`} key={vehicle.id}>
       <div className="vehicle-image"><span className="sample-badge">Illustrative class</span><Image src={vehicle.image} alt={`Illustrative ${vehicle.type.toLowerCase()} class`} width={1200} height={900} sizes="(max-width: 760px) 92vw, 33vw" /></div>
       <div className="vehicle-copy"><div><span className="eyebrow">{vehicle.type}</span><h3>{vehicle.name}</h3><p>{vehicle.suitability}</p></div>
-        <div className="vehicle-meta"><span><Users size={17}/>{vehicle.passengers} guests</span><span><BriefcaseBusiness size={17}/>{vehicle.luggage} bags</span></div>
+        <div className="vehicle-meta"><span><Users size={17}/>{vehicle.type === "Lorry" ? "Driver + 1 passenger" : `${vehicle.passengers} guests`}</span></div>
         <ul>{vehicle.features.map((feature) => <li key={feature}><Check size={15}/>{feature}</li>)}</ul>
         <Link className={`button ${selected ? "button--selected" : "button--outline"}`} href="/plan-ride" onClick={() => update({ vehicle: vehicle.id })}>{selected ? "Selected" : "Choose this class"}<ArrowUpRight size={17}/></Link>
       </div>
