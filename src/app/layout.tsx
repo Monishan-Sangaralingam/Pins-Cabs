@@ -6,6 +6,13 @@ export const metadata: Metadata = {
   title: { default: "PINS Cabs | Plan your journey", template: "%s | PINS Cabs" },
   description: "Plan a ride with PINS Cabs in Wattala. Choose a journey and vehicle class, then send a clear enquiry by WhatsApp.",
   openGraph: { title: "PINS Cabs", description: "Your next journey, made simple." },
+  icons: {
+    icon: [
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/media/brand/favicon-32.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: [{ url: "/media/brand/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
+  },
 };
 
 export const viewport: Viewport = {
