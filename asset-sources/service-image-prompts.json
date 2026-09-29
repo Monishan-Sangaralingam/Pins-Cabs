@@ -1,0 +1,38 @@
+{
+  "tool": "Built-in image_gen",
+  "purpose": "Illustrative service photography; not photographs of the actual PINS Cabs team, fleet, or customers.",
+  "prompts": [
+  {
+    "id": "airport",
+    "prompt": "Use case: photorealistic-natural. Asset type: service card photograph for a Sri Lankan transport website. Landscape 4:3 composition, refined editorial travel photography, natural believable details, warm sunset highlights and subtle deep teal shadows to suit a dark premium website. Keep main subjects inside the central 70 percent for responsive crops. No text, lettering, signage, logos, watermarks, or frames. This is a service story, NOT an isolated vehicle catalogue shot. A South Asian adult traveller with a rolling suitcase walking through a modern glass airport arrivals terminal, a passenger aircraft visible through the huge windows outside. Focus on arrival and travel, sophisticated warm daylight."
+  },
+  {
+    "id": "city",
+    "prompt": "Use case: photorealistic-natural. Asset type: service card photograph for a Sri Lankan transport website. Landscape 4:3 composition, refined editorial travel photography, natural believable details, warm sunset highlights and subtle deep teal shadows to suit a dark premium website. Keep main subjects inside the central 70 percent for responsive crops. No text, lettering, signage, logos, watermarks, or frames. This is a service story, NOT an isolated vehicle catalogue shot. A beautiful lively Colombo-inspired Sri Lankan urban street with palm trees, modern buildings, a few pedestrians and subtle traffic at golden hour. Focus on the city destination and everyday urban journeys."
+  },
+  {
+    "id": "outstation",
+    "prompt": "Use case: photorealistic-natural. Asset type: service card photograph for a Sri Lankan transport website. Landscape 4:3 composition, refined editorial travel photography, natural believable details, warm sunset highlights and subtle deep teal shadows to suit a dark premium website. Keep main subjects inside the central 70 percent for responsive crops. No text, lettering, signage, logos, watermarks, or frames. This is a service story, NOT an isolated vehicle catalogue shot. A winding paved road through lush Sri Lankan tea-covered hills with distant blue-green mountains and soft morning mist. Breathtaking road-trip scenery, tea bushes in foreground, no dominant vehicle."
+  },
+  {
+    "id": "wedding",
+    "prompt": "Use case: photorealistic-natural. Asset type: service card photograph for a Sri Lankan transport website. Landscape 4:3 composition, refined editorial travel photography, natural believable details, warm sunset highlights and subtle deep teal shadows to suit a dark premium website. Keep main subjects inside the central 70 percent for responsive crops. No text, lettering, signage, logos, watermarks, or frames. This is a service story, NOT an isolated vehicle catalogue shot. An elegant Sri Lankan garden wedding arrival with a South Asian adult bride and groom walking toward a tasteful floral arch at a colonial-style garden venue. Ivory florals and warm afternoon light, calm candid moment, no dominant car."
+  },
+  {
+    "id": "staff",
+    "prompt": "Use case: photorealistic-natural. Asset type: service card photograph for a Sri Lankan transport website. Landscape 4:3 composition, refined editorial travel photography, natural believable details, warm sunset highlights and subtle deep teal shadows to suit a dark premium website. Keep main subjects inside the central 70 percent for responsive crops. No text, lettering, signage, logos, watermarks, or frames. This is a service story, NOT an isolated vehicle catalogue shot. Three South Asian adult office colleagues carrying work bags walking together from a discreet commuter van toward a contemporary office entrance at morning arrival. Focus on people and the work commute, realistic professional clothing."
+  },
+  {
+    "id": "long-trip",
+    "prompt": "Use case: photorealistic-natural. Asset type: service card photograph for a Sri Lankan transport website. Landscape 4:3 composition, refined editorial travel photography, natural believable details, warm sunset highlights and subtle deep teal shadows to suit a dark premium website. Keep main subjects inside the central 70 percent for responsive crops. No text, lettering, signage, logos, watermarks, or frames. This is a service story, NOT an isolated vehicle catalogue shot. A small group of South Asian adult friends with backpacks enjoying a scenic coastal viewpoint in Sri Lanka, a discreet tour coach parked in the background. Focus on shared group travel and the beautiful destination."
+  },
+  {
+    "id": "lorry",
+    "prompt": "Use case: photorealistic-natural. Asset type: service card photograph for a Sri Lankan transport website. Landscape 4:3 composition, refined editorial travel photography, natural believable details, warm sunset highlights and subtle deep teal shadows to suit a dark premium website. Keep main subjects inside the central 70 percent for responsive crops. No text, lettering, signage, logos, watermarks, or frames. This is a service story, NOT an isolated vehicle catalogue shot. Two adult South Asian delivery workers carefully loading neatly packed cardboard boxes into an open goods truck outside a small business. Focus on helpful moving and delivery service, plain clothing, realistic hands and boxes."
+  },
+  {
+    "id": "custom",
+    "prompt": "Use case: photorealistic-natural. Asset type: service card photograph for a Sri Lankan transport website. Landscape 4:3 composition, refined editorial travel photography, natural believable details, warm sunset highlights and subtle deep teal shadows to suit a dark premium website. Keep main subjects inside the central 70 percent for responsive crops. No text, lettering, signage, logos, watermarks, or frames. This is a service story, NOT an isolated vehicle catalogue shot. A close-up editorial travel-planning scene on a wooden cafe table: an adult traveller's hands planning a route on an unlabelled paper map with a notebook, small backpack and cup of tea, lush tropical landscape beyond. Focus on tailor-made itineraries, no readable text."
+  }
+]
+}

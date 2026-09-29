@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "./coastal-theme.css";
 import { PlannerProvider } from "@/components/planner/PlannerProvider";
 
 export const metadata: Metadata = {

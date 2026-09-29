@@ -8,6 +8,8 @@ import { business } from "@/config/business";
 import { locations, services, vehicles } from "@/data/content";
 import { formatEnquiry, whatsappUrl, type PlannerState } from "@/lib/enquiry";
 import { usePlanner } from "./PlannerProvider";
+import { TripTypeSelector } from "./TripTypeSelector";
+import { RideTypeSelector } from "./RideTypeSelector";
 
 const steps = ["Journey", "Vehicle", "Contact", "Review"];
 
@@ -80,8 +82,8 @@ export function PlanRideWizard() {
       </details>
       <div className="wizard-card">
         {step === 0 && <div className="wizard-panel"><div className="panel-heading"><span>01</span><div><h2>Your journey</h2><p>Tell us the essentials. Preset locations are suggestions only.</p></div></div>
-          <div className="choice-row" role="group" aria-label="Service type">{services.map((service) => <button type="button" className={state.service === service.id ? "active" : ""} key={service.id} onClick={() => update({ service: service.id })}>{service.name}</button>)}</div>
-          <div className="choice-row compact" role="group" aria-label="Journey type"><button type="button" className={state.tripType === "one-way" ? "active" : ""} onClick={() => update({ tripType: "one-way" })}>One-way</button><button type="button" className={state.tripType === "return" ? "active" : ""} onClick={() => update({ tripType: "return" })}>Return</button></div>
+          <RideTypeSelector/>
+          <TripTypeSelector/>
           <div className="form-grid"><label><span>Pickup location</span><input list="locations" value={state.pickup} onChange={(e) => update({ pickup: e.target.value })} placeholder="Enter a location" {...field("pickup")}/>{errors.pickup && <small id="pickup-error" className="field-error">{errors.pickup}</small>}</label><label><span>Destination</span><input list="locations" value={state.destination} onChange={(e) => update({ destination: e.target.value })} placeholder="Enter a destination" {...field("destination")}/>{errors.destination && <small id="destination-error" className="field-error">{errors.destination}</small>}</label>
             <datalist id="locations">{locations.map((location) => <option key={location} value={location}/>)}</datalist>
             <label><span>Pickup date</span><input type="date" value={state.date} onFocus={(event) => { const now = sriLankaNow(); event.currentTarget.min = `${now.year}-${now.month}-${now.day}`; }} onChange={(e) => update({ date: e.target.value })} {...field("date")}/>{errors.date && <small id="date-error" className="field-error">{errors.date}</small>}</label><label><span>Pickup time</span><input type="time" value={state.time} onChange={(e) => update({ time: e.target.value })} {...field("time")}/>{errors.time && <small id="time-error" className="field-error">{errors.time}</small>}</label>
@@ -109,7 +111,7 @@ export function PlanRideWizard() {
           {copyFailed && <div className="copy-fallback"><p>Clipboard access was blocked. Select and copy this message:</p><textarea readOnly value={formatEnquiry(state)} rows={12}/></div>}
           <p className="whatsapp-hint">Your enquiry is ready. Send it in WhatsApp to contact PINS Cabs.</p>
         </div>}
-        <div className="wizard-footer">{step > 0 ? <button type="button" className="text-button" onClick={() => setStep(step - 1)}><ArrowLeft size={17}/>Back</button> : <Link className="text-button" href="/"><ArrowLeft size={17}/>Home</Link>}{step < 3 && <button type="button" className="button button--dark" onClick={proceed}>Continue <ArrowRight size={18}/></button>}</div>
+        <div className="wizard-footer">{step > 0 ? <button type="button" className="text-button" onClick={() => setStep(step - 1)}><ArrowLeft size={17}/>Back</button> : <Link className="text-button" href="/#home-top"><ArrowLeft size={17}/>Home</Link>}{step < 3 && <button type="button" className="button button--dark" onClick={proceed}>Continue <ArrowRight size={18}/></button>}</div>
       </div>
       <aside className="trip-summary desktop-trip-summary"><div><span className="eyebrow">Trip summary</span><button type="button" onClick={reset}>Reset</button></div><h3>{state.pickup || "Pickup"}<span>to</span>{state.destination || "Destination"}</h3><dl><div><dt>Service</dt><dd>{services.find((s) => s.id === state.service)?.name}</dd></div><div><dt>When</dt><dd>{state.date ? `${state.date}${state.time ? ` · ${state.time}` : ""}` : "Not selected"}</dd></div><div><dt>Guests</dt><dd>{state.passengers} · {state.luggage} bags</dd></div><div><dt>Vehicle</dt><dd>{selectedVehicle?.name ?? (state.vehicle === "assisted" ? "Recommendation requested" : "Not selected")}</dd></div></dl><p><LocateFixed size={16}/>All times use {business.timezone}.</p><a href={`tel:${business.phoneHref}`}><Phone size={17}/>Need help? {business.phoneDisplay}</a></aside>
     </div>
