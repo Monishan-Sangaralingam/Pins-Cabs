@@ -2,6 +2,12 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Social sharing preview
+
+The site uses `public/media/social/pins-cabs-share-v2.jpg` for Open Graph and large Twitter/X previews.
+Before a production build, set `NEXT_PUBLIC_SITE_URL` to the real public HTTPS site address in your hosting environment or `.env.local` (see `.env.example`). Vercel's production URL is used automatically when available; local development falls back to `http://localhost:3000`.
+This project exports static HTML, so rebuild and deploy after changing the site address. Existing previews may remain cached by the sharing service.
+
 First, run the development server:
 
 ```bash

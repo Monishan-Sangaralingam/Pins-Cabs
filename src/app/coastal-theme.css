@@ -7,6 +7,9 @@
   --radius-md: 22px;
 }
 body { background: var(--night); }
+.footer-top > div:first-child .developer-credit { margin: 4px 0 0; font-size: .8rem; color: #a9b6ae; }
+.footer-top .developer-credit a { display: inline; color: var(--lime); font-size: inherit; text-underline-offset: 4px; }
+.footer-top .developer-credit a:hover { text-decoration: underline; }
 .button { border-radius: 14px; min-height: 54px; }
 .button--lime { background: linear-gradient(110deg, #cafa72, #bdf857); color: #11180b; }
 .button--ghost { background: #15202266; border-color: #e8efd878; backdrop-filter: blur(14px); }

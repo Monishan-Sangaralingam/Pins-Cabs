@@ -3,10 +3,21 @@ import "./globals.css";
 import "./coastal-theme.css";
 import { PlannerProvider } from "@/components/planner/PlannerProvider";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000");
+const sharingImage = {
+  url: "/media/social/pins-cabs-share-v2.jpg",
+  width: 1200,
+  height: 630,
+  alt: "PINS Cabs — Ride smarter. Arrive better. Coastal rides at sunset.",
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: { default: "PINS Cabs | Plan your journey", template: "%s | PINS Cabs" },
   description: "Plan a ride with PINS Cabs in Wattala. Choose a journey and vehicle class, then send a clear enquiry by WhatsApp.",
-  openGraph: { title: "PINS Cabs", description: "Your next journey, made simple." },
+  openGraph: { type: "website", siteName: "PINS Cabs", title: "PINS Cabs", description: "Your next journey, made simple.", images: [sharingImage] },
+  twitter: { card: "summary_large_image", title: "PINS Cabs", description: "Your next journey, made simple.", images: [sharingImage] },
   icons: {
     icon: [
       { url: "/icon.png", type: "image/png", sizes: "512x512" },
