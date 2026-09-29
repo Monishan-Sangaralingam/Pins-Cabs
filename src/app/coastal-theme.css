@@ -113,6 +113,11 @@ body { background: var(--night); }
   .hero-planner .quick-planner label:nth-of-type(n) { grid-column: auto; }
 }
 @media (max-width: 760px) {
+  .service-number { display: none; }
+  .service-list article { grid-template-columns: minmax(0, 1fr); }
+  .service-list article > .service-list-image,
+  .service-list article > div:not(.service-list-image),
+  .service-list article > .button { grid-column: 1; }
   .shell { width: calc(100% - 36px); }
   .site-header:not(.is-scrolled):not(.menu-open) { padding-top: 10px; }
   .site-header:not(.is-scrolled):not(.menu-open) .header-inner { width: calc(100% - 48px); height: 62px; margin-top: 0; padding: 0; }
