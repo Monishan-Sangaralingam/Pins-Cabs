@@ -17,7 +17,7 @@ export function QuickPlanner() {
     <label className="quick-field quick-field--destination"><span><MapPin size={15}/>Destination</span><input list="quick-locations" placeholder="Where to?" value={state.destination} onChange={(e) => update({ destination: e.target.value })}/></label>
     <datalist id="quick-locations">{locations.map((location) => <option key={location} value={location}/>)}</datalist>
     <label className="quick-field quick-field--date"><span><CalendarDays size={15}/>Date</span><input type="date" value={state.date} onFocus={(event) => { event.currentTarget.min = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Colombo", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date()); }} onChange={(e) => update({ date: e.target.value })}/></label>
-    <label className="quick-field quick-field--passengers"><span><Users size={15}/>Passengers</span><input type="number" inputMode="numeric" min="1" max="50" step="1" value={state.passengers || ""} placeholder="How many?" onChange={(event) => { const value = event.target.value; update({ passengers: value === "" ? 0 : Math.min(50, Number(value)), vehicle: "" }); }} onBlur={() => { if (!Number.isInteger(state.passengers) || state.passengers < 1) update({ passengers: 1 }); }}/></label>
-    <button className="button button--lime" type="submit">Find my ride <ArrowRight size={18}/></button>
-  </form><p className="quick-planner-note">All rides are confirmed directly after enquiry.</p></>;
+    <label className="quick-field quick-field--passengers"><span><Users size={15}/>Passengers</span><input type="number" inputMode="numeric" min="1" max="50" step="1" value={state.passengers || ""} placeholder="How many?" onChange={(event) => { const value = event.target.value; update({ passengers: value === "" ? 0 : Math.min(50, Number(value)) }); }} onBlur={() => { if (!Number.isInteger(state.passengers) || state.passengers < 1) update({ passengers: 1 }); }}/></label>
+    <button className="button button--lime" type="submit">Continue to enquiry <ArrowRight size={18}/></button>
+  </form><p className="quick-planner-note">Availability and price confirmed by our team.</p></>;
 }
