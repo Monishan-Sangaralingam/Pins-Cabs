@@ -16,7 +16,7 @@ export function VehicleCards({ limit }: { limit?: number }) {
       <div className="vehicle-copy"><div><span className="eyebrow">{vehicle.type}</span><h3>{vehicle.name}</h3><p>{vehicle.suitability}</p></div>
         <div className="vehicle-meta"><span><Users size={17}/>{vehicle.type === "Lorry" ? "Driver + 1 passenger" : `${vehicle.passengers} guests`}</span></div>
         <ul>{vehicle.features.map((feature) => <li key={feature}><Check size={15}/>{feature}</li>)}</ul>
-        <Link className={`button ${selected ? "button--selected" : "button--outline"}`} href={`/plan-ride?vehicle=${vehicle.id}`} onClick={() => update({ vehicle: vehicle.id })}>{selected ? "Selected" : "Choose this class"}<ArrowUpRight size={17}/></Link>
+        <Link className={`button ${selected ? "button--selected" : "button--outline"}`} href="/plan-ride" onClick={() => update({ vehicle: vehicle.id })}>{selected ? "Selected" : "Choose this class"}<ArrowUpRight size={17}/></Link>
       </div>
     </article>;
   })}</div>;

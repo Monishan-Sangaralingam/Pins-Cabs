@@ -1,5 +1,4 @@
 import { business } from "@/config/business";
-import { services, vehicles } from "@/data/content";
 
 export type PlannerState = {
   service: string;
@@ -18,35 +17,19 @@ export type PlannerState = {
   phone: string;
   email: string;
   notes: string;
-  requirements: Record<string, string>;
 };
 
 export const initialPlannerState: PlannerState = {
-  service: "city", tripType: "one-way", pickup: "", destination: "", date: "", time: "", returnDate: "", returnTime: "", passengers: 1, luggage: 0, flight: "", vehicle: "", name: "", phone: "", email: "", notes: "", requirements: {},
+  service: "city", tripType: "one-way", pickup: "", destination: "", date: "", time: "", returnDate: "", returnTime: "", passengers: 1, luggage: 0, flight: "", vehicle: "", name: "", phone: "", email: "", notes: "",
 };
 
-export const serviceRequirements: Record<string, { label: string; placeholder: string }> = {
-  airport: { label: "Airport pickup requirements", placeholder: "Arrivals or departures, terminal, meeting point or assistance needed" },
-  staff: { label: "Schedule and recurring travel", placeholder: "Work days, shift times, pickup stops and how often you need transport" },
-  wedding: { label: "Wedding timing and special requests", placeholder: "Ceremony and arrival times, waiting time, stops or styling requests" },
-  "long-trip": { label: "Group and trip details", placeholder: "Group size, stops, trip duration and any accessibility needs" },
-  lorry: { label: "Goods, load size and access", placeholder: "Goods description, approximate dimensions or weight, stairs and loading access" },
-};
-
-export function plannerLinkValues(search: string): Partial<PlannerState> {
-  const params = new URLSearchParams(search);
-  const result: Partial<PlannerState> = {};
-  const service = params.get("service");
-  const vehicle = params.get("vehicle");
-  if (services.some((item) => item.id === service)) result.service = service!;
-  if (vehicles.some((item) => item.id === vehicle)) result.vehicle = vehicle!;
-  return result;
-}
+const serviceNames: Record<string, string> = { airport: "Airport transfer", city: "City ride", outstation: "Outstation trip", wedding: "Wedding & luxury car", staff: "Staff transport", "long-trip": "Long-trip bus hire", custom: "Custom journey" };
+const vehicleNames: Record<string, string> = { sedan: "Comfort Sedan", suv: "Flexible SUV", van: "Group Van", "kdh-9": "KDH Van · 9 Seater", "kdh-14": "KDH High Roof · 14 Seater", "ac-bus": "AC Coach Bus", "non-ac-bus": "Non-AC Bus", "wedding-luxury": "Luxury Wedding Car", assisted: "Please recommend a suitable vehicle" };
 
 export function formatEnquiry(data: PlannerState) {
   const lines = [
     "Hello PINS Cabs, I would like to enquire about a ride.",
-    `Service: ${services.find((item) => item.id === data.service)?.name ?? "Custom journey"}`,
+    `Service: ${serviceNames[data.service] ?? data.service}`,
     `Journey: ${data.tripType === "return" ? "Return" : "One-way"}`,
     `Pickup: ${data.pickup.trim()}`,
     `Destination: ${data.destination.trim()}`,
@@ -54,9 +37,8 @@ export function formatEnquiry(data: PlannerState) {
   ];
   if (data.tripType === "return") lines.push(`Return time: ${data.returnDate} at ${data.returnTime} (${business.timezone})`);
   lines.push(`Passengers / luggage: ${data.passengers} / ${data.luggage}`);
-  lines.push(`Requested vehicle: ${vehicles.find((item) => item.id === data.vehicle)?.name ?? "Please recommend a suitable vehicle"}`);
-  if (data.service === "airport" && data.flight.trim()) lines.push(`Flight number: ${data.flight.trim()}`);
-  if (data.requirements[data.service]?.trim()) lines.push(`${serviceRequirements[data.service]?.label ?? "Service requirements"}: ${data.requirements[data.service].trim()}`);
+  lines.push(`Requested vehicle: ${vehicleNames[data.vehicle] ?? "Please recommend"}`);
+  if (data.flight.trim()) lines.push(`Flight number: ${data.flight.trim()}`);
   lines.push(`Name: ${data.name.trim()}`, `Contact: ${data.phone.trim()}`);
   if (data.email.trim()) lines.push(`Email: ${data.email.trim()}`);
   if (data.notes.trim()) lines.push(`Additional requirements: ${data.notes.trim()}`);
@@ -65,5 +47,5 @@ export function formatEnquiry(data: PlannerState) {
 }
 
 export function whatsappUrl(data: PlannerState) {
-  return `https://wa.me/${business.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(formatEnquiry(data))}`;
+  return `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(formatEnquiry(data))}`;
 }

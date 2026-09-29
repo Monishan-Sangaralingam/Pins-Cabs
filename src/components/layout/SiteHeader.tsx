@@ -24,9 +24,6 @@ export function SiteHeader() {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     mobileMenuRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
-    const desktop = window.matchMedia("(min-width: 1100px)");
-    const onResize = () => { if (desktop.matches) setOpen(false); };
-    desktop.addEventListener("change", onResize);
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setOpen(false);
@@ -40,7 +37,7 @@ export function SiteHeader() {
       }
     };
     document.addEventListener("keydown", onKeyDown);
-    return () => { desktop.removeEventListener("change", onResize); document.body.style.overflow = previousOverflow; document.removeEventListener("keydown", onKeyDown); };
+    return () => { document.body.style.overflow = previousOverflow; document.removeEventListener("keydown", onKeyDown); };
   }, [open]);
   const headerClasses = ["site-header", scrolled && "is-scrolled", open && "menu-open"]
     .filter(Boolean)
@@ -77,7 +74,7 @@ export function SiteHeader() {
             return <Link key={item.href} href={item.href} scroll={item.href.includes("#")} className={active ? "is-active" : undefined} aria-current={active ? "page" : undefined} onClick={(event) => handleHeaderNavigation(event, item.href)}>{item.label}</Link>;
           })}
         </nav>
-        <Link className={`button button--lime header-cta ${normalizedPath === "/plan-ride" ? "is-active" : ""}`} aria-current={normalizedPath === "/plan-ride" ? "page" : undefined} href="/plan-ride" scroll={false} onClick={(event) => handleHeaderNavigation(event, "/plan-ride")}>Request a ride <span>↗</span></Link>
+        <Link className={`button button--lime header-cta ${normalizedPath === "/plan-ride" ? "is-active" : ""}`} aria-current={normalizedPath === "/plan-ride" ? "page" : undefined} href="/plan-ride" scroll={false} onClick={(event) => handleHeaderNavigation(event, "/plan-ride")}>Plan my ride <span>↗</span></Link>
         <button ref={menuButtonRef} className="menu-button" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="mobile-menu" aria-label={open ? "Close menu" : "Open menu"}>{open ? <X /> : <Menu />}</button>
       </div>
       {open && <nav ref={mobileMenuRef} id="mobile-menu" className="mobile-menu" aria-label="Mobile navigation">
@@ -86,7 +83,7 @@ export function SiteHeader() {
           const active = route !== "/" && normalizedPath === route;
           return <Link key={item.href} href={item.href} scroll={item.href.includes("#")} className={active ? "is-active" : undefined} aria-current={active ? "page" : undefined} onClick={(event) => handleHeaderNavigation(event, item.href)}>{item.label}<span>↗</span></Link>;
         })}
-        <Link className="button button--lime" href="/plan-ride" scroll={false} onClick={(event) => handleHeaderNavigation(event, "/plan-ride")}>Request a ride</Link>
+        <Link className="button button--lime" href="/plan-ride" scroll={false} onClick={(event) => handleHeaderNavigation(event, "/plan-ride")}>Plan my ride</Link>
       </nav>}
     </header>
   );
