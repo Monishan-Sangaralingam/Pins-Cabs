@@ -998,7 +998,7 @@ main,.site-footer{position:relative;z-index:2}
     margin:17px 0 15px;
   }
   .subpage-hero p{font-size:.92rem;line-height:1.6}
-  .service-list article{padding:24px 0}
+  .service-list article{padding:16px;gap:18px}
   .service-list-image{aspect-ratio:16/9}
   .service-list h2{font-size:1.43rem;line-height:1.12}
   .service-list p{font-size:.9rem;line-height:1.58}
