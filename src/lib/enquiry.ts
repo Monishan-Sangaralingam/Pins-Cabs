@@ -27,8 +27,8 @@ export const initialPlannerState: PlannerState = {
   service: "city", tripType: "one-way", pickup: "", destination: "", date: "", time: "", returnDate: "", returnTime: "", passengers: 1, luggage: 0, flight: "", vehicle: "", name: "", phone: "", email: "", notes: "",
 };
 
-const serviceNames: Record<string, string> = { airport: "Airport transfer", city: "City ride", outstation: "Outstation trip", wedding: "Wedding & luxury car", staff: "Staff transport", "long-trip": "Long-trip bus hire", custom: "Custom journey" };
-const vehicleNames: Record<string, string> = { alto: "Suzuki Alto", aqua: "Toyota Aqua", "suzuki-every": "Suzuki Every", van: "Group Van", "kdh-9": "KDH Van · 9 Seater", "kdh-14": "KDH High Roof · 14 Seater", "bus-29": "29 Seater Bus", "bus-35": "35 Seater Bus", "bus-55": "55 Seater Bus", "wedding-luxury": "Luxury Wedding Car", lorry: "Enclosed Goods Lorry", assisted: "Please recommend a suitable vehicle" };
+const serviceNames: Record<string, string> = { lorry: "Lorry transport", airport: "Airport transfer", city: "City ride", outstation: "Outstation trip", wedding: "Wedding & luxury car", staff: "Staff transport", "long-trip": "Long-trip bus hire", custom: "Custom journey" };
+const vehicleNames: Record<string, string> = { "kama-mini-truck": "KAMA 1–3T Mini Truck", alto: "Suzuki Alto", "wagon-r": "Suzuki Wagon R", aqua: "Toyota Aqua", "suzuki-every": "Suzuki Every", "non-ac-van": "Non-AC Van", "kdh-9": "KDH Van · 9 Seater", "kdh-14": "KDH High Roof · 14 Seater", "bus-29": "29 Seater Bus", "bus-35": "35 Seater Bus", "bus-55": "55 Seater Bus", "wedding-luxury": "Luxury Wedding Car", lorry: "Enclosed Goods Lorry", assisted: "Please recommend a suitable vehicle" };
 
 export function formatEnquiry(data: PlannerState) {
   const lines = [

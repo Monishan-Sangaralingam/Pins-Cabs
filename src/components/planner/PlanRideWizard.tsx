@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, Check, Clipboard, ExternalLink, LocateFixed, Phone, RotateCcw, Users } from "lucide-react";
@@ -8,6 +8,7 @@ import { business } from "@/config/business";
 import { services, vehicles } from "@/data/content";
 import { formatEnquiry, whatsappUrl, type PlannerState } from "@/lib/enquiry";
 import { usePlanner } from "./PlannerProvider";
+import { suggestVehicles, suggestionReason } from "@/lib/vehicleSuggestions";
 import { TripTypeSelector } from "./TripTypeSelector";
 import { RideTypeSelector } from "./RideTypeSelector";
 
@@ -38,7 +39,7 @@ function validate(step: number, data: PlannerState) {
       else if (`${data.returnDate}T${data.returnTime}` <= `${data.date}T${data.time}`) errors.returnDate = "Return must be after pickup.";
     }
   }
-  if (step === 1 && !data.vehicle) errors.vehicle = "Choose a vehicle class or ask us to recommend one.";
+  if (step === 1 && (!data.vehicle || (data.vehicle !== "assisted" && !suggestVehicles(data).some(vehicle => vehicle.id === data.vehicle)))) errors.vehicle = "Choose a vehicle class or ask us to recommend one.";
   if (step === 2) {
     if (!data.name.trim()) errors.name = "Enter your name.";
     if (!/^\+?[0-9 ()-]{7,20}$/.test(data.phone.trim())) errors.phone = "Enter a valid phone number with country code if outside Sri Lanka.";
@@ -54,7 +55,7 @@ export function PlanRideWizard() {
   const [copied, setCopied] = useState(false);
   const [copyFailed, setCopyFailed] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
-  const eligible = useMemo(() => vehicles.filter((v) => v.passengers >= state.passengers), [state.passengers]);
+  const eligible = suggestVehicles(state);
   const selectedVehicle = vehicles.find((vehicle) => vehicle.id === state.vehicle);
 
   useEffect(() => {
@@ -95,14 +96,14 @@ export function PlanRideWizard() {
           <button type="button" className="swap-button" onClick={() => update({ pickup: state.destination, destination: state.pickup, pickupLocation: state.destinationLocation, destinationLocation: state.pickupLocation })}><RotateCcw size={16}/>Swap pickup and destination</button>
           <JourneyMap/>
         </div>}
-        {step === 1 && <div className="wizard-panel"><div className="panel-heading"><span>02</span><div><h2>Choose a vehicle</h2><p>Class images and capacities are illustrative until the real fleet is confirmed.</p></div></div>
-          <div className="vehicle-options" aria-describedby={errors.vehicle ? "vehicle-error" : undefined}>{eligible.map((vehicle) => <button type="button" key={vehicle.id} className={state.vehicle === vehicle.id ? "active" : ""} onClick={() => { update({ vehicle: vehicle.id }); setErrors({}); }}><Image src={vehicle.image} alt="" width={110} height={82}/><span><b>{vehicle.name}</b><small><Users size={14}/> {vehicle.type === "Lorry" ? "Driver + 1 passenger" : `Up to ${vehicle.passengers} guests`}</small></span><i>{state.vehicle === vehicle.id && <Check/>}</i></button>)}</div>
+        {step === 1 && <div className="wizard-panel"><div className="panel-heading"><span>02</span><div><h2>Vehicles for your journey</h2><p>{suggestionReason(state)}</p></div></div>
+          <div className="vehicle-options" aria-describedby={errors.vehicle ? "vehicle-error" : undefined}>{eligible.map((vehicle) => <button type="button" key={vehicle.id} aria-pressed={state.vehicle === vehicle.id} className={state.vehicle === vehicle.id ? "active" : ""} onClick={() => { update({ vehicle: vehicle.id }); setErrors({}); }}><Image src={vehicle.image} alt="" width={110} height={82}/><span><b>{vehicle.name}</b><small><Users size={14}/> {vehicle.type === "Lorry" ? "Driver + 1 passenger" : `Up to ${vehicle.passengers} guests`}</small></span><i>{state.vehicle === vehicle.id && <Check/>}</i></button>)}</div>
           {(eligible.length === 0 || state.luggage > 10) && <div className="notice">Your group, seating layout or luggage may need manual confirmation. Bus and van capacities are guidance only until PINS Cabs confirms the exact vehicle.</div>}
           <button type="button" className={`recommend-option ${state.vehicle === "assisted" ? "active" : ""}`} onClick={() => { update({ vehicle: "assisted" }); setErrors({}); }}>Request a suitable vehicle</button>
           {errors.vehicle && <small id="vehicle-error" className="field-error">{errors.vehicle}</small>}
         </div>}
         {step === 2 && <div className="wizard-panel"><div className="panel-heading"><span>03</span><div><h2>Your contact details</h2><p>Used only to prepare your message. Details stay in memory and are not stored by this site.</p></div></div>
-          <div className="form-grid"><label><span>Your name</span><input autoComplete="name" value={state.name} onChange={(e) => update({ name: e.target.value })} {...field("name")}/>{errors.name && <small id="name-error" className="field-error">{errors.name}</small>}</label><label><span>Phone number</span><input autoComplete="tel" value={state.phone} onChange={(e) => update({ phone: e.target.value })} placeholder="+94 ..." {...field("phone")}/>{errors.phone && <small id="phone-error" className="field-error">{errors.phone}</small>}</label><label className="full"><span>Email <em>optional</em></span><input type="email" autoComplete="email" value={state.email} onChange={(e) => update({ email: e.target.value })} {...field("email")}/>{errors.email && <small id="email-error" className="field-error">{errors.email}</small>}</label><label className="full"><span>Pickup instructions or requirements <em>optional</em></span><textarea maxLength={500} rows={5} value={state.notes} onChange={(e) => update({ notes: e.target.value })} placeholder="Landmark, child seat request, accessibility needs…"/><small>{state.notes.length}/500</small></label></div>
+          <div className="form-grid"><label><span>Your name</span><input autoComplete="name" value={state.name} onChange={(e) => update({ name: e.target.value })} {...field("name")}/>{errors.name && <small id="name-error" className="field-error">{errors.name}</small>}</label><label><span>Phone number</span><input autoComplete="tel" value={state.phone} onChange={(e) => update({ phone: e.target.value })} placeholder="+94 ..." {...field("phone")}/>{errors.phone && <small id="phone-error" className="field-error">{errors.phone}</small>}</label><label className="full"><span>Email <em>optional</em></span><input type="email" autoComplete="email" value={state.email} onChange={(e) => update({ email: e.target.value })} {...field("email")}/>{errors.email && <small id="email-error" className="field-error">{errors.email}</small>}</label><label className="full"><span>Pickup instructions or requirements <em>optional</em></span><textarea maxLength={500} rows={5} value={state.notes} onChange={(e) => update({ notes: e.target.value })} placeholder={state.service === "lorry" ? "Goods, estimated weight, dimensions, loading help and access…" : "Landmark, child seat request, accessibility needs…"}/><small>{state.notes.length}/500</small></label></div>
         </div>}
         {step === 3 && <div className="wizard-panel review-panel"><div className="panel-heading"><span>04</span><div><h2>Ready to enquire</h2><p>Review the details, then open WhatsApp. You will still need to press send.</p></div></div>
           <div className="review-block"><div><span>Journey</span><button onClick={() => setStep(0)}>Edit</button></div><p><b>{state.pickup}</b> → <b>{state.destination}</b></p><small>{state.date} at {state.time} · {business.timezone} · {state.passengers} guest(s) · {state.luggage} bag(s)</small></div>

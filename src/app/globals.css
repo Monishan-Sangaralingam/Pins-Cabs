@@ -1041,3 +1041,7 @@ main,.site-footer{position:relative;z-index:2}
   .hero--sunset .hero-facts b{font-size:.6rem}
   .hero--sunset .hero-facts small{font-size:.54rem}
 }
+
+.fleet-filters { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid #d5ded9; border-radius: 18px; background: #f3f6f2; color: #172d28; }
+.fleet-filters p { margin-top: 1rem; line-height: 1.6; }
+.fleet-filters select { width: 100%; min-height: 48px; padding: 12px; border: 1px solid #ccd4cf; border-radius: 10px; background: white; color: #172d28; font: inherit; }
