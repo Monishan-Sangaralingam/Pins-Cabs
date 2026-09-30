@@ -5,7 +5,7 @@ import "./location.css";
 import { PlannerProvider } from "@/components/planner/PlannerProvider";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-  || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000");
+  || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "https://www.pinscabs.com");
 const sharingImage = {
   url: "/media/social/pins-cabs-share-v2.jpg",
   width: 1200,

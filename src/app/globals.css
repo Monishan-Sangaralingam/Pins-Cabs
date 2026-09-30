@@ -1045,3 +1045,24 @@ main,.site-footer{position:relative;z-index:2}
 .fleet-filters { margin-bottom: 2rem; padding: 1.5rem; border: 1px solid #d5ded9; border-radius: 18px; background: #f3f6f2; color: #172d28; }
 .fleet-filters p { margin-top: 1rem; line-height: 1.6; }
 .fleet-filters select { width: 100%; min-height: 48px; padding: 12px; border: 1px solid #ccd4cf; border-radius: 10px; background: white; color: #172d28; font: inherit; }
+
+/* Service pages and planning guides */
+.seo-breadcrumb{display:flex;gap:12px;align-items:center;margin-bottom:24px;font-size:.85rem;flex-wrap:wrap}
+.seo-breadcrumb a,.seo-links a,.seo-content a,.seo-article a:not(.button){text-decoration:underline;text-underline-offset:4px}
+.seo-actions{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:28px}
+.seo-content{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:56px;align-items:start}
+.seo-content article+article,.seo-article section+section{margin-top:38px}
+.seo-content h2,.seo-article h2,.seo-guide-grid h2{font-size:clamp(1.45rem,2.5vw,2rem);line-height:1.25;margin-bottom:16px}
+.seo-content p,.seo-article p,.seo-fleet p,.seo-guide-grid p{line-height:1.85;margin-bottom:20px}
+.seo-checklist{padding:28px;border:1px solid #9baf9b55;border-radius:18px;background:#7e997c10}
+.seo-checklist ul,.seo-fleet ul{padding-left:20px;list-style:disc;line-height:1.8;margin:16px 0 24px}
+.seo-fleet{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;margin-bottom:28px}
+.seo-fleet article{min-width:0;border:1px solid #9baf9b55;border-radius:18px;overflow:hidden;padding:0 20px 12px}
+.seo-fleet img{width:calc(100% + 40px);max-width:none;margin:0 -20px 20px;aspect-ratio:4/3;object-fit:cover}
+.seo-fleet h3{font-size:1.3rem;margin-bottom:12px}
+.seo-links{display:flex;gap:16px 26px;flex-wrap:wrap;margin:24px 0 32px}
+.seo-article{max-width:850px;overflow-wrap:anywhere}
+.seo-article>h2:not(:first-child){margin-top:36px}
+.seo-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+.seo-guide-grid article{padding:28px;border:1px solid #9baf9b55;border-radius:18px}
+@media(max-width:760px){.seo-content,.seo-guide-grid,.seo-fleet{grid-template-columns:minmax(0,1fr);gap:28px}.seo-actions .button{max-width:100%;white-space:normal}.seo-checklist{padding:22px}}

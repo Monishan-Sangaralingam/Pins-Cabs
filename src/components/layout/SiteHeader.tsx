@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { landingPages } from "@/data/landingPages";
 import { navItems } from "@/config/business";
 import { Logo } from "./Logo";
 
@@ -49,8 +50,11 @@ export function SiteHeader() {
     "/plan-ride": "Plan a ride",
     "/contact": "Contact",
     "/privacy": "Privacy",
+    "/about": "About",
+    "/blog": "Journey guides",
+    ...Object.fromEntries(landingPages.map(page => ["/" + page.slug, page.title])),
   };
-  const currentPage = pageLabels[normalizedPath] ?? "PINS Cabs";
+  const currentPage = pageLabels[normalizedPath] ?? (normalizedPath.startsWith("/blog/") ? "Journey guide" : "PINS Cabs");
 
   function handleHeaderNavigation(event: MouseEvent<HTMLAnchorElement>, href: string) {
     setOpen(false);
