@@ -32,14 +32,15 @@ export type Vehicle = {
 };
 
 export const vehicles: Vehicle[] = [
-  { id: "sedan", name: "Comfort Sedan", type: "Sedan", passengers: 3, image: "/media/fleet/sedan.webp", suitability: "Solo travellers, couples and light city travel.", features: ["Up to 3 guests", "Comfort seating", "Air-conditioned"] },
-  { id: "suv", name: "Flexible SUV", type: "SUV", passengers: 4, image: "/media/fleet/suv.webp", suitability: "Families and journeys that need a little more room.", features: ["Up to 4 guests", "Flexible interior", "Air-conditioned"] },
+  { id: "alto", name: "Suzuki Alto", type: "Compact Car", passengers: 3, image: "/media/fleet/alto.webp", suitability: "Solo travellers, couples and compact everyday city journeys.", features: ["Up to 3 guests", "Compact city car", "Air-conditioned"] },
+  { id: "aqua", name: "Toyota Aqua", type: "Hybrid Car", passengers: 4, image: "/media/fleet/aqua.webp", suitability: "Small families and comfortable everyday or outstation travel.", features: ["Up to 4 guests", "Hybrid hatchback", "Air-conditioned"] },
   { id: "suzuki-every", name: "Suzuki Every", type: "Compact Van", passengers: 4, image: "/media/fleet/suzuki-every.webp", suitability: "Compact city trips, small families and practical everyday travel.", features: ["Up to 4 guests", "Easy city access", "Air-conditioned"] },
   { id: "van", name: "Group Van", type: "Van", passengers: 7, image: "/media/fleet/van.webp", suitability: "Small groups and comfortable airport journeys.", features: ["Up to 7 guests", "Flexible cabin", "Air-conditioned"] },
   { id: "kdh-9", name: "KDH Van · 9 Seater", type: "KDH Van", passengers: 9, image: "/media/fleet/kdh-9.webp", suitability: "Family tours, airport transfers and compact group travel.", features: ["Up to 9 guests", "Tour-ready cabin", "Air-conditioned"] },
   { id: "kdh-14", name: "KDH High Roof · 14 Seater", type: "KDH Van", passengers: 14, image: "/media/fleet/kdh-14.webp", suitability: "Larger families, work teams and multi-day group journeys.", features: ["Up to 14 guests", "High-roof cabin", "Air-conditioned"] },
-  { id: "ac-bus", name: "AC Coach Bus", type: "Bus", passengers: 29, image: "/media/fleet/ac-bus.webp", suitability: "Long-distance tours, staff outings and comfortable group events.", features: ["Approx. 29 seats", "Group travel", "Air-conditioned"] },
-  { id: "non-ac-bus", name: "Non-AC Bus", type: "Bus", passengers: 40, image: "/media/fleet/non-ac-bus.webp", suitability: "Economical staff transport, events and larger local groups.", features: ["Approx. 40 seats", "Opening windows", "Value group travel"] },
+  { id: "bus-29", name: "29 Seater Bus", type: "Bus", passengers: 29, image: "/media/fleet/bus-29.webp", suitability: "Staff outings, events and medium-size group journeys.", features: ["Up to 29 guests", "Group travel", "Availability confirmed"] },
+  { id: "bus-35", name: "35 Seater Bus", type: "Bus", passengers: 35, image: "/media/fleet/bus-35.webp", suitability: "Tours, staff transport and larger group events.", features: ["Up to 35 guests", "Group travel", "Availability confirmed"] },
+  { id: "bus-55", name: "55 Seater Bus", type: "Bus", passengers: 55, image: "/media/fleet/bus-55.webp", suitability: "Large groups, long-distance tours and major events.", features: ["Up to 55 guests", "Large-group travel", "Availability confirmed"] },
   { id: "wedding-luxury", name: "Luxury Wedding Car", type: "Wedding Car", passengers: 3, image: "/media/fleet/wedding-luxury.webp", suitability: "Wedding arrivals, couple transport and special occasions.", features: ["Luxury class", "Wedding enquiries", "Schedule coordination"] },
   { id: "lorry", name: "Enclosed Goods Lorry", type: "Lorry", passengers: 2, image: "/media/fleet/lorry.webp", suitability: "Household moves, business deliveries and general goods transport.", features: ["Driver + 1 passenger", "Enclosed cargo body", "Load details confirmed"] },
 ];

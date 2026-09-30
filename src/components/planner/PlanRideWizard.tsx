@@ -5,11 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, Check, Clipboard, ExternalLink, LocateFixed, Phone, RotateCcw, Users } from "lucide-react";
 import { business } from "@/config/business";
-import { locations, services, vehicles } from "@/data/content";
+import { services, vehicles } from "@/data/content";
 import { formatEnquiry, whatsappUrl, type PlannerState } from "@/lib/enquiry";
 import { usePlanner } from "./PlannerProvider";
 import { TripTypeSelector } from "./TripTypeSelector";
 import { RideTypeSelector } from "./RideTypeSelector";
+
+import { LocationInput, JourneyMap } from "@/components/location/LocationInput";
 
 const steps = ["Journey", "Vehicle", "Contact", "Review"];
 
@@ -21,12 +23,12 @@ function sriLankaNow() {
 function validate(step: number, data: PlannerState) {
   const errors: Record<string,string> = {};
   if (step === 0) {
-    if (!data.pickup.trim()) errors.pickup = "Enter a pickup location.";
-    if (!data.destination.trim()) errors.destination = "Enter a destination.";
-    if (data.pickup.trim().toLowerCase() === data.destination.trim().toLowerCase() && data.pickup.trim()) errors.destination = "Pickup and destination must be different.";
+    if (!data.pickupLocation) errors.pickup = "Enter a pickup location.";
+    if (!data.destinationLocation) errors.destination = "Enter a destination.";
+    if (data.pickupLocation && data.destinationLocation && Math.abs(data.pickupLocation.latitude - data.destinationLocation.latitude) < 0.00001 && Math.abs(data.pickupLocation.longitude - data.destinationLocation.longitude) < 0.00001) errors.destination = "Pickup and destination must be different.";
     if (!data.date) errors.date = "Choose a pickup date.";
     if (!data.time) errors.time = "Choose a pickup time.";
-    if (!Number.isInteger(data.passengers) || data.passengers < 1 || data.passengers > 50) errors.passengers = "Enter between 1 and 50 passengers.";
+    if (!Number.isInteger(data.passengers) || data.passengers < 1 || data.passengers > 55) errors.passengers = "Enter between 1 and 55 passengers.";
     if (data.date && data.time) {
       const now = sriLankaNow(); const current = `${now.year}-${now.month}-${now.day}T${now.hour}:${now.minute}`;
       if (`${data.date}T${data.time}` < current) errors.date = "Pickup time must be in the future (Sri Lanka time).";
@@ -64,7 +66,7 @@ export function PlanRideWizard() {
 
   function proceed() {
     const nextErrors = validate(step, state); setErrors(nextErrors);
-    if (Object.keys(nextErrors).length) { requestAnimationFrame(() => formRef.current?.querySelector<HTMLElement>("[aria-invalid='true']")?.focus()); return; }
+    if (Object.keys(nextErrors).length) { requestAnimationFrame(() => formRef.current?.querySelector<HTMLElement>("[aria-invalid='true'], [data-invalid='true']")?.focus()); return; }
     setStep((current) => Math.min(current + 1, 3)); window.scrollTo({ top: 0, behavior: "smooth" });
   }
   async function copy() {
@@ -81,17 +83,17 @@ export function PlanRideWizard() {
         <div className="mobile-summary-body"><dl><div><dt>Service</dt><dd>{services.find((s) => s.id === state.service)?.name}</dd></div><div><dt>When</dt><dd>{state.date ? `${state.date}${state.time ? ` · ${state.time}` : ""}` : "Not selected"}</dd></div><div><dt>Guests</dt><dd>{state.passengers} · {state.luggage} bags</dd></div><div><dt>Vehicle</dt><dd>{selectedVehicle?.name ?? (state.vehicle === "assisted" ? "Recommendation requested" : "Not selected")}</dd></div></dl><div><span><LocateFixed size={15}/>Sri Lanka time</span><button type="button" onClick={reset}>Reset trip</button></div></div>
       </details>
       <div className="wizard-card">
-        {step === 0 && <div className="wizard-panel"><div className="panel-heading"><span>01</span><div><h2>Your journey</h2><p>Tell us the essentials. Preset locations are suggestions only.</p></div></div>
+        {step === 0 && <div className="wizard-panel"><div className="panel-heading"><span>01</span><div><h2>Your journey</h2><p>Search, use your current location, or choose a point on the map.</p></div></div>
           <RideTypeSelector/>
           <TripTypeSelector/>
-          <div className="form-grid"><label><span>Pickup location</span><input list="locations" value={state.pickup} onChange={(e) => update({ pickup: e.target.value })} placeholder="Enter a location" {...field("pickup")}/>{errors.pickup && <small id="pickup-error" className="field-error">{errors.pickup}</small>}</label><label><span>Destination</span><input list="locations" value={state.destination} onChange={(e) => update({ destination: e.target.value })} placeholder="Enter a destination" {...field("destination")}/>{errors.destination && <small id="destination-error" className="field-error">{errors.destination}</small>}</label>
-            <datalist id="locations">{locations.map((location) => <option key={location} value={location}/>)}</datalist>
+          <div className="form-grid"><LocationInput kind="pickup" error={errors.pickup}/><LocationInput kind="destination" error={errors.destination}/>
             <label><span>Pickup date</span><input type="date" value={state.date} onFocus={(event) => { const now = sriLankaNow(); event.currentTarget.min = `${now.year}-${now.month}-${now.day}`; }} onChange={(e) => update({ date: e.target.value })} {...field("date")}/>{errors.date && <small id="date-error" className="field-error">{errors.date}</small>}</label><label><span>Pickup time</span><input type="time" value={state.time} onChange={(e) => update({ time: e.target.value })} {...field("time")}/>{errors.time && <small id="time-error" className="field-error">{errors.time}</small>}</label>
             {state.tripType === "return" && <><label><span>Return date</span><input type="date" min={state.date || undefined} value={state.returnDate} onChange={(e) => update({ returnDate: e.target.value })} {...field("returnDate")}/>{errors.returnDate && <small id="returnDate-error" className="field-error">{errors.returnDate}</small>}</label><label><span>Return time</span><input type="time" value={state.returnTime} onChange={(e) => update({ returnTime: e.target.value })}/></label></>}
-            <label><span>Passengers</span><input type="number" inputMode="numeric" min="1" max="50" step="1" value={state.passengers || ""} onChange={(e) => { const value = e.target.value; update({ passengers: value === "" ? 0 : Math.min(50, Number(value)), vehicle: "" }); }} onBlur={() => { if (!Number.isInteger(state.passengers) || state.passengers < 1) update({ passengers: 1 }); }} {...field("passengers")}/>{errors.passengers && <small id="passengers-error" className="field-error">{errors.passengers}</small>}</label><label><span>Luggage pieces</span><input type="number" min="0" max="30" value={state.luggage} onChange={(e) => update({ luggage: Math.max(0, Math.min(30, Number(e.target.value))) })}/></label>
+            <label><span>Passengers</span><input type="number" inputMode="numeric" min="1" max="55" step="1" value={state.passengers || ""} onChange={(e) => { const value = e.target.value; update({ passengers: value === "" ? 0 : Math.min(55, Number(value)), vehicle: "" }); }} onBlur={() => { if (!Number.isInteger(state.passengers) || state.passengers < 1) update({ passengers: 1 }); }} {...field("passengers")}/>{errors.passengers && <small id="passengers-error" className="field-error">{errors.passengers}</small>}</label><label><span>Luggage pieces</span><input type="number" min="0" max="30" value={state.luggage} onChange={(e) => update({ luggage: Math.max(0, Math.min(30, Number(e.target.value))) })}/></label>
             {state.service === "airport" && <label className="full"><span>Flight number <em>optional</em></span><input value={state.flight} onChange={(e) => update({ flight: e.target.value })} placeholder="e.g. UL 504"/></label>}
           </div>
-          <button type="button" className="swap-button" onClick={() => update({ pickup: state.destination, destination: state.pickup })}><RotateCcw size={16}/>Swap pickup and destination</button>
+          <button type="button" className="swap-button" onClick={() => update({ pickup: state.destination, destination: state.pickup, pickupLocation: state.destinationLocation, destinationLocation: state.pickupLocation })}><RotateCcw size={16}/>Swap pickup and destination</button>
+          <JourneyMap/>
         </div>}
         {step === 1 && <div className="wizard-panel"><div className="panel-heading"><span>02</span><div><h2>Choose a vehicle</h2><p>Class images and capacities are illustrative until the real fleet is confirmed.</p></div></div>
           <div className="vehicle-options" aria-describedby={errors.vehicle ? "vehicle-error" : undefined}>{eligible.map((vehicle) => <button type="button" key={vehicle.id} className={state.vehicle === vehicle.id ? "active" : ""} onClick={() => { update({ vehicle: vehicle.id }); setErrors({}); }}><Image src={vehicle.image} alt="" width={110} height={82}/><span><b>{vehicle.name}</b><small><Users size={14}/> {vehicle.type === "Lorry" ? "Driver + 1 passenger" : `Up to ${vehicle.passengers} guests`}</small></span><i>{state.vehicle === vehicle.id && <Check/>}</i></button>)}</div>
