@@ -4,24 +4,27 @@ Both the home booking card and Journey step share the location selector. Structu
 
 ## Free default configuration
 
-Leaflet + OpenStreetMap tiles + public Nominatim. No API key or billing account. Geolocation requires HTTPS (localhost also works) and browser permission.
+Leaflet + OpenStreetMap tiles + Photon search + Nominatim reverse geocoding. No API key or billing account. Geolocation requires HTTPS (localhost also works) and browser permission.
 
-Public Nominatim explicitly forbids autocomplete, regardless of debounce: https://operations.osmfoundation.org/policies/nominatim/
+Suggestions appear automatically after at least 3 characters and a 500 ms typing pause. Search/Enter remains available. Photon queries use a Sri Lanka bounding box and country filter; returned results are also checked for LK and limited to 5. Requests are cancelled when input changes, cached (100 entries), serialized, and spaced at least 1.1 seconds apart within a browser session. Reverse lookup runs 500 ms after map movement stops. Failed reverse lookup preserves the selected coordinates for confirmation.
 
-Therefore default search runs only on Search/Enter, requires 3 characters, and restricts results to Sri Lanka (maximum 5). Requests are cancelled when input changes, cached (100 entries), serialized, and spaced at least 1.1 seconds apart within a browser session. Reverse lookup runs 500 ms after map movement stops. Failed reverse lookup preserves the selected coordinates for confirmation.
+Photon supports search-as-you-type; its public server permits reasonable usage, with no availability guarantee: https://github.com/komoot/photon
+Public Nominatim forbids autocomplete and receives only reverse lookups in the default configuration: https://operations.osmfoundation.org/policies/nominatim/
 
-This project exports a static site. The browser queue cannot enforce a service-wide request limit across visitors. Before scaling beyond light usage, use an operator-controlled geocoder or gateway with a shared rate limit/cache. Public Nominatim has no availability guarantee. Do not use the public endpoint for a high-traffic deployment.
+This static site's browser queue cannot enforce a shared limit across visitors. Before scaling beyond light usage, configure operator-controlled services or a gateway with shared rate limiting/cache.
 
-## Optional self-hosted autocomplete
+## Optional build-time configuration
 
-Set these at build time, only for an endpoint whose operator permits autocomplete:
+No environment variables are needed for the default setup. To use your own Photon server:
 
 ```
-NEXT_PUBLIC_NOMINATIM_URL=https://your-own-nominatim.example
-NEXT_PUBLIC_LOCATION_AUTOCOMPLETE=true
+NEXT_PUBLIC_PHOTON_URL=https://your-own-photon.example
 ```
 
-The endpoint must expose Nominatim-compatible search/reverse JSON and permit browser CORS. Typeahead is debounced 500 ms; it is forcibly disabled for the public Nominatim hostname. Provider behavior is isolated in `src/services/locationService.ts`.
+To disable automatic suggestions, set `NEXT_PUBLIC_LOCATION_AUTOCOMPLETE=false`.
+To return to Nominatim search, set `NEXT_PUBLIC_LOCATION_SEARCH_PROVIDER=nominatim`. Public Nominatim always uses explicit Search/Enter. An operator-controlled Nominatim-compatible service can opt into autocomplete with `NEXT_PUBLIC_NOMINATIM_URL` and `NEXT_PUBLIC_LOCATION_AUTOCOMPLETE=true`; only do this where permitted by its operator. The Nominatim URL also controls reverse lookup. Custom endpoints must permit browser CORS. Restart/rebuild after changing these variables.
+
+Provider behavior is isolated in `src/services/locationService.ts`.
 
 Recent locations are session-only, limited to 5; no precise location persistence. Searches and selected coordinates are sent to the configured geocoder; map tiles go to OpenStreetMap. Attribution is visible in search and maps.
 

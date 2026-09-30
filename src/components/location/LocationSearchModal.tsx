@@ -85,7 +85,7 @@ export default function LocationSearchModal({ kind, value, onSelect, onClose }: 
         <div className="location-results" aria-busy={busy}>
           {!query && recents.length > 0 && <h3>Recent locations</h3>}
           {(results || (!query ? recents : [])).map((location) => <button type="button" className="location-result" key={`${location.latitude},${location.longitude}`} onClick={() => { cancel(); setAnchor(location); setSelected(location); setMapOpen(true); setBusy(false); setStatus("Location found. Confirm below or move the pin to adjust."); }}><MapPin size={21}/><span><b>{location.name}</b><small>{location.address}</small></span></button>)}
-          {!results && !busy && <p className="location-hint">Search Sri Lanka by place or address. Enter at least 3 characters{autocompleteEnabled ? "." : " and press Search."}</p>}
+          {!results && !busy && <p className="location-hint">Search Sri Lanka by place or address. Enter at least 3 characters{autocompleteEnabled ? " — suggestions appear as you type." : " and press Search."}</p>}
         </div>
       </> : <>
         <p className="location-hint">Move the map to adjust the pin. Arrow keys also move the map.</p>
