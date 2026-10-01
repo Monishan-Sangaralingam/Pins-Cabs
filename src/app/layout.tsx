@@ -6,6 +6,7 @@ import "./cinematic.css";
 import { PlannerProvider } from "@/components/planner/PlannerProvider";
 import { siteOrigin } from "@/lib/seo";
 import { Analytics } from "@/components/Analytics";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 const sharingImage = {
   url: "/media/social/pins-cabs-share-v2.jpg",
@@ -40,7 +41,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col"><PlannerProvider>{children}</PlannerProvider><Analytics /></body>
+      <body className="min-h-full flex flex-col"><PlannerProvider>{children}</PlannerProvider><Analytics /><VercelAnalytics /></body>
     </html>
   );
 }
