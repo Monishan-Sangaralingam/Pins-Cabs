@@ -13,6 +13,7 @@ export const businessSchema = {
       telephone: business.phoneHref,
       email: business.emailDisplay,
       logo: `${siteOrigin}/media/brand/pins-cabs-logo.png`,
+      sameAs: business.socialLinks.map((link) => link.href),
       address: { "@type": "PostalAddress", ...business.postalAddress },
       openingHoursSpecification: {
         "@type": "OpeningHoursSpecification",

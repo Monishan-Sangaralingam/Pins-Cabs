@@ -4,8 +4,8 @@ export const business = {
   phoneDisplay: "072 800 0400",
   phoneHref: "+94728000400",
   whatsappNumber: "+94728000400",
-  emailDisplay: "pinselectronics@gmail.com",
-  emailHref: "mailto:pinselectronics@gmail.com",
+  emailDisplay: "pinscabs777@gmail.com",
+  emailHref: "mailto:pinscabs777@gmail.com",
   address: "No. 133, Negombo–Colombo Main Road, Wattala 11300",
   postalAddress: {
     streetAddress: "No. 133, Negombo–Colombo Main Road",
@@ -14,6 +14,11 @@ export const business = {
     addressCountry: "LK",
   },
   mapUrl: "https://www.google.com/maps/search/?api=1&query=No.+133+Negombo+Colombo+Main+Road+Wattala+11300",
+  socialLinks: [
+    { label: "Instagram", href: "https://www.instagram.com/pins_cabs/", emoji: "📸" },
+    { label: "Facebook", href: "https://www.facebook.com/pinscabs", emoji: "👍" },
+    { label: "WhatsApp", href: "https://wa.me/94728000400", emoji: "💬" },
+  ],
   hours: "Available 24/7",
   timezone: "Asia/Colombo",
   currency: "LKR",
