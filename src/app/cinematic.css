@@ -1,0 +1,82 @@
+/* Cinematic direction changes motion only; final geometry belongs to the theme. */
+:root { --cinema-ease: cubic-bezier(.16, 1, .3, 1); }
+
+/* Remove old parent animation so individual lines and groups can lead the shot. */
+.hero--sunset .hero-slogan,
+.hero--sunset .hero-facts { animation: none; }
+.hero--sunset .hero-image { will-change: auto; }
+.hero--sunset > picture { transform-origin: center bottom; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Opening shot: light movement in the image, crisp text, then the invitation. */
+  .hero--sunset .hero-image {
+    animation: cinema-image 1800ms var(--cinema-ease) backwards;
+    transform-origin: 60% 80%;
+  }
+  .site-header .header-inner > .brand-logo,
+  .site-header .desktop-nav > a,
+  .site-header .header-cta,
+  .site-header .menu-button {
+    animation: cinema-header 760ms var(--cinema-ease) backwards;
+  }
+  .site-header .desktop-nav > a:nth-child(1) { animation-delay: 70ms; }
+  .site-header .desktop-nav > a:nth-child(2) { animation-delay: 115ms; }
+  .site-header .desktop-nav > a:nth-child(3) { animation-delay: 160ms; }
+  .site-header .desktop-nav > a:nth-child(4) { animation-delay: 205ms; }
+  .site-header .header-cta, .site-header .menu-button { animation-delay: 180ms; }
+  .hero--sunset .hero-eyebrow { animation: cinema-rise 700ms var(--cinema-ease) 100ms backwards; }
+  .hero--sunset .hero-slogan > span,
+  .hero--sunset .hero-slogan > em {
+    animation: cinema-title 1100ms var(--cinema-ease) 170ms backwards;
+  }
+  .hero--sunset .hero-slogan > em { animation-delay: 300ms; }
+  .hero--sunset .hero-copy > p { animation: cinema-rise 850ms var(--cinema-ease) 350ms backwards; }
+  .hero--sunset .hero-actions { animation: cinema-rise 850ms var(--cinema-ease) 450ms backwards; }
+  .hero--sunset .hero-facts > span { animation: cinema-rise 750ms var(--cinema-ease) 510ms backwards; }
+  .hero--sunset .hero-facts > span:nth-child(2) { animation-delay: 570ms; }
+  .hero--sunset .hero-facts > span:nth-child(3) { animation-delay: 630ms; }
+
+  /* Interior pages carry the same visual phrasing without an artificial loader. */
+  .subpage-hero .shell > * { animation: cinema-rise 850ms var(--cinema-ease) backwards; }
+  .subpage-hero .shell > :nth-child(2) { animation-delay: 80ms; }
+  .subpage-hero .shell > :nth-child(3) { animation-delay: 160ms; }
+  .subpage-hero .shell > :nth-child(4) { animation-delay: 230ms; }
+  .subpage-hero .shell > h1 { animation-name: cinema-title; }
+  .mobile-menu > a { animation: cinema-rise 500ms var(--cinema-ease) backwards; }
+  .mobile-menu > a:nth-child(2) { animation-delay: 40ms; }
+  .mobile-menu > a:nth-child(3) { animation-delay: 80ms; }
+  .mobile-menu > a:nth-child(4) { animation-delay: 120ms; }
+  .mobile-menu > a:nth-child(5) { animation-delay: 160ms; }
+}
+
+/* Focus and direct interactions take priority over the entrance choreography. */
+.site-header:focus-within .header-inner > *,
+.site-header:focus-within .desktop-nav > a,
+.hero-actions:focus-within,
+.subpage-hero .shell > :focus-within,
+.mobile-menu:focus-within > a { animation: none; }
+
+@keyframes cinema-header {
+  from { opacity: 0; transform: translate3d(0,-14px,0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cinema-rise {
+  from { opacity: 0; transform: translate3d(0,20px,0); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes cinema-title {
+  from { opacity: .12; clip-path: inset(0 0 100% 0); transform: translate3d(0,24px,0); }
+  to { opacity: 1; clip-path: inset(0 0 -12% 0); transform: none; }
+}
+@keyframes cinema-image {
+  from { transform: scale(1.035); }
+  to { transform: scale(1); }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: no-preference) {
+  .hero--sunset .hero-image { animation-duration: 1300ms; }
+  .hero--sunset .hero-slogan > span, .hero--sunset .hero-slogan > em { animation-duration: 850ms; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero--sunset > picture { transform: none !important; }
+  .site-header *, .hero--sunset *, .subpage-hero *, .mobile-menu > a { animation: none !important; }
+}

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./coastal-theme.css";
 import "./location.css";
+import "./cinematic.css";
 import { PlannerProvider } from "@/components/planner/PlannerProvider";
 import { siteOrigin } from "@/lib/seo";
 import { Analytics } from "@/components/Analytics";
