@@ -7,6 +7,12 @@ export const business = {
   emailDisplay: "pinselectronics@gmail.com",
   emailHref: "mailto:pinselectronics@gmail.com",
   address: "No. 133, Negombo–Colombo Main Road, Wattala 11300",
+  postalAddress: {
+    streetAddress: "No. 133, Negombo–Colombo Main Road",
+    addressLocality: "Wattala",
+    postalCode: "11300",
+    addressCountry: "LK",
+  },
   mapUrl: "https://www.google.com/maps/search/?api=1&query=No.+133+Negombo+Colombo+Main+Road+Wattala+11300",
   hours: "Available 24/7",
   timezone: "Asia/Colombo",

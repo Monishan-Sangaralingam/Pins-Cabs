@@ -49,7 +49,7 @@ body { background: var(--night); }
 }
 .hero--sunset .hero-content { height: clamp(740px, 56.25vw, 850px); min-height: 0; padding-top: 156px; padding-bottom: 60px; }
 .hero--sunset .hero-copy { max-width: 720px; }
-.hero--sunset h1 { font-size: clamp(4.5rem, 6.7vw, 6.6rem); line-height: .98; font-weight: 750; letter-spacing: -.055em; margin: 25px 0; }
+.hero--sunset .hero-slogan { font-size: clamp(4.5rem, 6.7vw, 6.6rem); line-height: .98; font-weight: 750; letter-spacing: -.055em; margin: 25px 0; }
 .hero--sunset .hero-copy > p { max-width: 490px; font-size: 1.15rem; line-height: 1.55; }
 .hero--sunset .hero-eyebrow { letter-spacing: .2em; font-weight: 600; }
 .hero--sunset .hero-eyebrow > svg { display: none; }
@@ -135,8 +135,8 @@ body { background: var(--night); }
   .hero--sunset .hero-content { width: calc(100% - 56px); height: clamp(630px, 150vw, 1040px); padding-top: 108px; padding-bottom: 0; }
   .hero--sunset .hero-eyebrow { font-size: clamp(.5rem, 1.75vw, .78rem); letter-spacing: .17em; gap: 8px; }
   .hero--sunset .hero-eyebrow i { width: 18px; flex-basis: 18px; }
-  .hero--sunset h1 { font-size: clamp(2.75rem, 10.7vw, 5rem); line-height: .98; letter-spacing: -.055em; margin: 19px 0 16px; }
-  .hero--sunset h1 em { margin-top: 3px; }
+  .hero--sunset .hero-slogan { font-size: clamp(2.75rem, 10.7vw, 5rem); line-height: .98; letter-spacing: -.055em; margin: 19px 0 16px; }
+  .hero--sunset .hero-slogan em { margin-top: 3px; }
   .hero--sunset .hero-copy > p { max-width: 32ch; font-size: clamp(.96rem, 3.1vw, 1.3rem); line-height: 1.5; text-shadow: 0 2px 14px #0008; }
   .hero--sunset .hero-actions { width: 62%; min-width: 200px; margin-top: 23px; flex-direction: column; gap: 9px; }
   .hero--sunset .hero-actions .button { width: 100%; min-width: 0; min-height: 49px; font-size: 1rem; }
@@ -166,8 +166,15 @@ body { background: var(--night); }
 }
 @media (max-width: 359px) {
   .hero--sunset .hero-content { width: calc(100% - 36px); height: 640px; }
-  .hero--sunset h1 { font-size: 2.65rem; }
+  .hero--sunset .hero-slogan { font-size: 2.65rem; }
   .hero--sunset .hero-facts svg { display: none; }
   :is(.hero-planner, .wizard-panel) .quick-tabs button { font-size: .65rem; }
   :is(.hero-planner, .wizard-panel) .quick-tabs button svg { width: 14px; }
+}
+
+/* Preserve the primary heading in the existing hero eyebrow position. */
+.hero--sunset h1.hero-eyebrow { margin: 0; line-height: 1.5; }
+/* Reserve space for the raised sticky wizard footer so it cannot cover inputs. */
+@media (max-width: 760px) {
+  .wizard-panel { padding-bottom: 94px; }
 }

@@ -54,5 +54,5 @@ export function formatEnquiry(data: PlannerState) {
 }
 
 export function whatsappUrl(data: PlannerState) {
-  return `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(formatEnquiry(data))}`;
+  return `https://wa.me/${business.whatsappNumber.replace(/\D/g, "")}?text=${encodeURIComponent(formatEnquiry(data))}`;
 }

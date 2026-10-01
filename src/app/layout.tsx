@@ -3,9 +3,9 @@ import "./globals.css";
 import "./coastal-theme.css";
 import "./location.css";
 import { PlannerProvider } from "@/components/planner/PlannerProvider";
+import { siteOrigin } from "@/lib/seo";
+import { Analytics } from "@/components/Analytics";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-  || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "https://www.pinscabs.com");
 const sharingImage = {
   url: "/media/social/pins-cabs-share-v2.jpg",
   width: 1200,
@@ -14,7 +14,8 @@ const sharingImage = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteOrigin),
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION || undefined },
   title: { default: "PINS Cabs | Plan your journey", template: "%s | PINS Cabs" },
   description: "Plan a ride with PINS Cabs in Wattala. Choose a journey and vehicle class, then send a clear enquiry by WhatsApp.",
   openGraph: { type: "website", siteName: "PINS Cabs", title: "PINS Cabs", description: "Your next journey, made simple.", images: [sharingImage] },
@@ -38,7 +39,7 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col"><PlannerProvider>{children}</PlannerProvider></body>
+      <body className="min-h-full flex flex-col"><PlannerProvider>{children}</PlannerProvider><Analytics /></body>
     </html>
   );
 }

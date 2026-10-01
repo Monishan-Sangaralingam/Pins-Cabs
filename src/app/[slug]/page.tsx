@@ -1,3 +1,4 @@
+import { serializeJsonLd } from "@/lib/structuredData";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -27,7 +28,7 @@ export default async function ServiceLanding({ params }: { params: Promise<{ slu
     { "@type": "ListItem", position: 3, name: page.title, item: siteOrigin + "/" + slug + "/" },
   ] };
   return <PageShell>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\u003c") }}/>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}/>
     <section className="subpage-hero"><div className="shell"><nav className="seo-breadcrumb" aria-label="Breadcrumb"><Link href="/">Home</Link><span>/</span><Link href="/services/">Services</Link></nav><span className="eyebrow">PINS Cabs · Plan your journey</span><h1>{page.title}</h1><p>{page.intro}</p><div className="seo-actions"><Link className="button button--lime" href={booking}>Plan this journey</Link><a className="button button--outline" href={"tel:" + business.phoneHref}>Call {business.phoneDisplay}</a></div></div></section>
     <section className="section shell seo-content"><div>{page.sections.map(section => <article key={section.heading}><h2>{section.heading}</h2><p>{section.text}</p></article>)}</div><aside className="seo-checklist"><h2>Include in your enquiry</h2><ul>{page.checklist.map(item => <li key={item}>{item}</li>)}</ul><p>Send your prepared message on WhatsApp. Availability, the vehicle and the final price are confirmed directly before booking.</p><Link href={booking}>Start your enquiry →</Link></aside></section>
     <section className="section shell"><div className="section-heading"><div><span className="eyebrow">Vehicle guidance</span><h2>Options to discuss</h2></div><p>Images illustrate vehicle classes. Confirm the exact vehicle, capacity and luggage or load fit with PINS Cabs.</p></div><div className="seo-fleet">{fleet.map(vehicle => <article key={vehicle.id}><Image src={vehicle.image} alt={"Illustrative " + vehicle.name} width={1200} height={900} sizes="(max-width: 700px) 90vw, 30vw"/><h3>{vehicle.name}</h3><p>{vehicle.suitability}</p><ul>{vehicle.features.map(feature => <li key={feature}>{feature}</li>)}</ul></article>)}</div><p><Link href="/vehicles/">Compare vehicle classes →</Link></p></section>

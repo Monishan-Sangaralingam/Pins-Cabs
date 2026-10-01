@@ -19,7 +19,7 @@ export function VehicleCards({ limit }: { limit?: number }) {
   </div><div className="vehicle-grid">{shown.map((vehicle) => {
     const selected = state.vehicle === vehicle.id;
     return <article className={`vehicle-card ${selected ? "is-selected" : ""}`} key={vehicle.id}>
-      <div className="vehicle-image"><span className="sample-badge">Illustrative class</span><Image src={vehicle.image} alt={`Illustrative ${vehicle.type.toLowerCase()} class`} width={1200} height={900} sizes="(max-width: 760px) 92vw, 33vw" /></div>
+      <div className="vehicle-image"><span className="sample-badge">Illustrative class</span><Image src={vehicle.image} alt={`Illustrative ${vehicle.name} vehicle class`} width={1200} height={900} sizes="(max-width: 760px) 92vw, 33vw" /></div>
       <div className="vehicle-copy"><div><span className="eyebrow">{vehicle.type}</span><h3>{vehicle.name}</h3><p>{vehicle.suitability}</p></div>
         <div className="vehicle-meta"><span><Users size={17}/>{vehicle.type === "Lorry" ? "Driver + 1 passenger" : `${vehicle.passengers} guests`}</span></div>
         <ul>{vehicle.features.map((feature) => <li key={feature}><Check size={15}/>{feature}</li>)}</ul>

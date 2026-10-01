@@ -1,3 +1,4 @@
+import { businessSchema, serializeJsonLd } from "@/lib/structuredData";
 import { pageMetadata } from "@/lib/seo";
 import { serviceLandingLinks } from "@/data/landingPages";
 import Image from "next/image";
@@ -9,14 +10,15 @@ import { VehicleCards } from "@/components/vehicles/VehicleCards";
 import { business } from "@/config/business";
 import { faqs, services } from "@/data/content";
 
-export const metadata = pageMetadata("Taxi & Airport Transfers in Wattala", "PINS Cabs in Wattala: enquire about city taxis, airport transfers, vans, buses, wedding cars and goods transport. Confirm your journey directly.", "/");
+export const metadata = pageMetadata("Taxi Service in Wattala & Colombo", "Book taxis, airport transfers, KDH vans, buses, wedding cars and transport services in Wattala, Colombo and across Sri Lanka with PINS Cabs.", "/");
 
 export default function Home() {
   return <PageShell>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(businessSchema) }}/>
     <section className="hero hero--sunset" id="home-top">
-      <picture><source media="(max-width: 760px)" srcSet="/media/hero/hero-mobile-v2.webp"/><Image className="hero-image" src="/media/hero/hero-desktop-v2.webp" alt="" fill priority sizes="100vw"/></picture><div className="hero-shade"/>
+      <picture><source media="(max-width: 760px)" srcSet="/media/hero/hero-mobile-v2.webp"/><Image className="hero-image" src="/media/hero/hero-desktop-v2.webp" alt="" fill loading="eager" fetchPriority="high" sizes="100vw"/></picture><div className="hero-shade"/>
       <div className="hero-route" aria-hidden="true"><span/><i/><b/></div>
-      <div className="hero-content shell"><div className="hero-copy"><span className="hero-eyebrow"><Sparkles size={15}/>PINS CABS <i/> YOUR JOURNEY STARTS HERE</span><h1><span>Ride smarter.</span><em>Arrive better.</em></h1><p>Premium city rides, airport transfers and comfortable travel, all in one place. Your next journey starts with PINS Cabs.</p><div className="hero-actions"><Link className="button button--lime" href="/plan-ride#main-content">Book your ride <ArrowRight size={18}/></Link><Link className="button button--ghost" href="/vehicles#main-content">Explore fleet <ArrowRight size={18}/></Link></div><div className="hero-facts"><span><Clock3/><b>24/7<small>Available</small></b></span><span><Headphones/><b>Personal service<small>Every journey</small></b></span><span><MapPin/><b>Based in<small>Wattala / Colombo</small></b></span></div></div></div>
+      <div className="hero-content shell"><div className="hero-copy"><h1 className="hero-eyebrow"><Sparkles size={15}/>Taxi Service in Wattala &amp; Colombo</h1><div className="hero-slogan"><span>Ride smarter.</span><em>Arrive better.</em></div><p>City taxis and airport transfers from Wattala and Colombo, with transport enquiries across Sri Lanka. Plan your journey with PINS Cabs.</p><div className="hero-actions"><Link className="button button--lime" href="/plan-ride#main-content">Book your ride <ArrowRight size={18}/></Link><Link className="button button--ghost" href="/vehicles#main-content">Explore fleet <ArrowRight size={18}/></Link></div><div className="hero-facts"><span><Clock3/><b>24/7<small>Available</small></b></span><span><Headphones/><b>Personal service<small>Every journey</small></b></span><span><MapPin/><b>Based in<small>Wattala / Colombo</small></b></span></div></div></div>
     </section>
     <div className="planner-wrap hero-planner shell" id="ride-planner"><QuickPlanner/></div>
     <section className="section shell services-section"><div className="section-heading"><div><span className="eyebrow">Choose your journey</span><h2>One place to plan<br/>every kind of ride.</h2></div><p>From everyday cabs and wedding cars to staff transport and long-trip buses, start with what you know and we’ll confirm the rest.</p></div><div className="service-grid">{services.map((service, index) => { const Icon = service.icon; return <Link href={serviceLandingLinks[service.id] || `/plan-ride?service=${service.id}`} className="service-card" key={service.id}><div className="service-media"><Image src={service.image} alt={service.imageAlt} width={1200} height={900}/><span className="service-number">0{index + 1}</span><div className="service-icon"><Icon/></div></div><span className="eyebrow">{service.kicker}</span><h3>{service.name}</h3><p>{service.description}</p><b>{serviceLandingLinks[service.id] ? "Explore this service" : "Plan this trip"} <ArrowRight size={16}/></b></Link>; })}</div></section>
