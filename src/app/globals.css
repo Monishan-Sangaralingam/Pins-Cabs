@@ -594,7 +594,7 @@ main,.site-footer{position:relative;z-index:2}
 .faq-list details[open]::details-content{block-size:auto;opacity:1}
 .faq-list details[open]{border-color:#c8f36a4d}
 
-.closing{isolation:isolate;overflow:hidden}
+.closing{position:relative;isolation:isolate;overflow:hidden}
 .closing::before{content:"";position:absolute;width:min(760px,90vw);aspect-ratio:1;left:50%;bottom:-78%;border:1px solid #c8f36a24;border-radius:50%;transform:translateX(-50%);box-shadow:0 0 100px #e9894615;pointer-events:none}
 .closing .shell{position:relative;z-index:1}
 .closing h2{letter-spacing:-.07em}
